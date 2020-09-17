@@ -74,7 +74,7 @@ class BST {
 
     // when there is nothing right of current.right, return current.data
     while (current.right !== null) {
-      current = current.rght;
+      current = current.right;
     }
     return current.data;
   }
@@ -109,21 +109,69 @@ class BST {
     }
     return false;
   }
+
+  // "data" is what we are trying to remove. And the remove function is recursive. 
   remove(data) {
     const removeNode = function (node, data) {
+
+// if node equals null, it means we have an empty tree.  
       if (node == null) {
         return null;
       }
+
+      // if we've found the node within the data, then do steps below. 
       if (data == node.data) {
         // node has no children
         if (node.left == null && node.right == null) {
-          return null;
+          return null; 
         }
         // node has no left child 
         if (node.right == null) {
           return node.left;
         }
+        // node has no right child
+        if (node.right == null) {
+          return node.left;
+        }
+        // node has two children
+        let tempNode = node.right;
+        while (tempNode.left !== null) {
+          tempNode = tempNode.left;
+        }
+        node.data = tempNode.data;
+        node.right = removeNode(node.right, tempNode.data);
+        return node;
+      } else if (data < node.data) {
+        node.left = removeNode(node.left, data);
+        return node;
+      } else {
+        node.right = removeNode(node.right, data);
+        return node;
       }
-    }
+    } 
+
+    // this is where we call the function.  We always pass in the this.root node because this is where we start and data node because it is what we are searching for. 
+    this.root = removeNode(this.root, data)
   }
 }
+
+const bst = new BST();
+
+bst.add(4)
+bst.add(2)
+bst.add(6)
+bst.add(1)
+bst.add(3)
+bst.add(5)
+bst.add(7)
+bst.remove(4)
+
+console.log(bst.findMin())
+console.log(bst.findMax())
+bst.remove(7)
+console.log(bst.findMax())
+console.log(bst.isPresent(4))
+
+
+
+
