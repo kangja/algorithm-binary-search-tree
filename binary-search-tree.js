@@ -19,7 +19,7 @@ class BST {
   }
   add(data) {
     // if it is the first node, it becomes the new root. If it's not the first node, we have to figure out where to put the node in the tree. We have to use recursive function to figure out where to put it. 
-    const node = this.root; 
+    const node = this.root;
     if (node === null) {
       this.root = new Node(data);
       return;
@@ -55,28 +55,75 @@ class BST {
       return searchTree(node);
     }
   }
+
+  // finding minimum of the array. The minimum value is always located at the bottom left.
   findMin() {
+    // current is the number that is at the very top.(Top of the pyramid).
     let current = this.root;
+
+    // when there is nothing left of current.left, return current.data
     while (current.left !== null) {
       current = current.left;
     }
     return current.data;
   }
-}
-findMax() {
-  let current = this.root;
-  while (current.right !== null) {
-    current = current.rght;
+
+  // finding maximum of the array. The maximum value is always located at the bottom right.
+  findMax() {
+    let current = this.root;
+
+    // when there is nothing right of current.right, return current.data
+    while (current.right !== null) {
+      current = current.rght;
+    }
+    return current.data;
   }
-  return current.data;
-}
-find(data) {
-  let current = this.root;
-  while (current.data !== data) {
-    if (data < current.data) {
-      current = current.left;
-    } else {
-      current = current.right;
+
+  find(data) {
+    let current = this.root;
+    while (current.data !== data) {
+      if (data < current.data) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+      if (current === null) {
+        return null;
+      }
+    }
+    return current;
+  }
+
+  // returning true/false if the data is present.
+  isPresent(data) {
+    let current = this.root;
+    while (current) {
+      if (data === current.data) {
+        return true;
+      }
+      if (data < current.data) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+    return false;
+  }
+  remove(data) {
+    const removeNode = function (node, data) {
+      if (node == null) {
+        return null;
+      }
+      if (data == node.data) {
+        // node has no children
+        if (node.left == null && node.right == null) {
+          return null;
+        }
+        // node has no left child 
+        if (node.right == null) {
+          return node.left;
+        }
+      }
     }
   }
 }
