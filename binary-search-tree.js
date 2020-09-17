@@ -55,5 +55,28 @@ class BST {
       return searchTree(node);
     }
   }
-  findMin() {}
+  findMin() {
+    let current = this.root;
+    while (current.left !== null) {
+      current = current.left;
+    }
+    return current.data;
+  }
+}
+findMax() {
+  let current = this.root;
+  while (current.right !== null) {
+    current = current.rght;
+  }
+  return current.data;
+}
+find(data) {
+  let current = this.root;
+  while (current.data !== data) {
+    if (data < current.data) {
+      current = current.left;
+    } else {
+      current = current.right;
+    }
+  }
 }
